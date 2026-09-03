@@ -90,6 +90,7 @@ class RecoveryExecuteResponse(BaseModel):
     recovered_amount: float
     intervention_cost: float
     action: str
+    payment_link_url: Optional[str] = None
 
 class RecoveryAuditResponse(BaseModel):
     id: int
@@ -103,5 +104,6 @@ class RecoveryAuditResponse(BaseModel):
     recovered_amount: float
     reason: Optional[str] = None
     created_at: datetime
+    razorpay_link_id: Optional[str] = None
     
     model_config = ConfigDict(from_attributes=True)

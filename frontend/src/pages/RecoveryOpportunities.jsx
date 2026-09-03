@@ -73,11 +73,20 @@ export function RecoveryOpportunities() {
                   <Badge color={
                     executionResults[opp.payment_id].status === 'SUCCESS' ? 'green' :
                     executionResults[opp.payment_id].status === 'FAILED' ? 'red' :
-                    executionResults[opp.payment_id].status === 'STOPPED' ? 'gray' : 'yellow'
+                    executionResults[opp.payment_id].status === 'STOPPED' ? 'gray' :
+                    executionResults[opp.payment_id].status === 'LINK_CREATED' ? 'blue' : 'yellow'
                   }>
                     {executionResults[opp.payment_id].status}
                   </Badge>
                   <span className="text-xs text-gray-500">{executionResults[opp.payment_id].message}</span>
+                  {executionResults[opp.payment_id].payment_link_url && (
+                    <button
+                      onClick={() => window.open(executionResults[opp.payment_id].payment_link_url, '_blank')}
+                      className="text-xs text-indigo-600 hover:text-indigo-900 mt-1 text-left inline-block w-max font-medium"
+                    >
+                      [ Open Test Payment ]
+                    </button>
+                  )}
                 </div>
               ) : (
                 <button
@@ -108,14 +117,22 @@ export function RecoveryOpportunities() {
                   <Badge color={
                     audit.execution_status === 'SUCCESS' ? 'green' :
                     audit.execution_status === 'FAILED' ? 'red' :
-                    audit.execution_status === 'STOPPED' ? 'gray' : 'yellow'
+                    audit.execution_status === 'STOPPED' ? 'gray' :
+                    audit.execution_status === 'LINK_CREATED' ? 'blue' : 'yellow'
                   }>{audit.execution_status}</Badge>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-xs text-gray-500">₹{audit.intervention_cost}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-xs font-medium text-green-600">
                   {audit.recovered_amount > 0 ? `₹${audit.recovered_amount}` : '-'}
                 </td>
-                <td className="px-6 py-4 text-xs text-gray-500 max-w-xs truncate" title={audit.reason}>{audit.reason}</td>
+                <td className="px-6 py-4 text-xs text-gray-500 max-w-xs truncate" title={audit.reason}>
+                  {audit.reason}
+                  {audit.razorpay_link_id && (
+                    <span className="ml-2 px-1.5 py-0.5 rounded bg-gray-100 border border-gray-200 text-gray-600 font-mono text-[10px]">
+                      {audit.razorpay_link_id}
+                    </span>
+                  )}
+                </td>
               </tr>
             ))}
             {auditLog.length === 0 && (

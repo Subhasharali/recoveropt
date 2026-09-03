@@ -48,3 +48,4 @@ class RecoveryAudit(Base):
     recovered_amount = Column(Float, default=0.0)
     reason = Column(String, nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
+    razorpay_link_id = Column(String, nullable=True)
