@@ -5,13 +5,15 @@ from dotenv import load_dotenv
 env_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env')
 load_dotenv(env_path)
 
-client = None
-if os.getenv("RAZORPAY_KEY_ID") and os.getenv("RAZORPAY_KEY_SECRET"):
-    client = razorpay.Client(auth=(os.getenv("RAZORPAY_KEY_ID"), os.getenv("RAZORPAY_KEY_SECRET")))
-
 def create_test_payment_link(amount: float, reference_id: str, description: str, customer_name: str) -> dict:
-    if not client:
+    key_id = os.getenv("RAZORPAY_KEY_ID")
+    key_secret = os.getenv("RAZORPAY_KEY_SECRET")
+    
+    if not key_id or not key_secret:
         raise Exception("Razorpay credentials not configured.")
+        
+    client = razorpay.Client(auth=(key_id, key_secret))
+
         
     amount_in_paise = int(amount * 100)
     
