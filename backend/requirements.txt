@@ -3,3 +3,5 @@ uvicorn==0.29.0
 sqlalchemy==2.0.52
 openai==1.14.3
 python-dotenv==1.0.1
+razorpay==2.0.1
+
