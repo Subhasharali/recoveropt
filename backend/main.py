@@ -3,9 +3,11 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from .database import engine, Base
 from .routers import payments, recovery
+from .seed import seed_data
 
 # Initialize Database
 Base.metadata.create_all(bind=engine)
+seed_data()
 
 app = FastAPI(title="RecoverOpt API")
 
